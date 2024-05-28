@@ -3,6 +3,7 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
     [SerializeField] bool _isPlaceable;
+    [SerializeField] bool _isWalkable;
     [SerializeField] GameObject _placeTarget;
 
     GameObject _targetInstance;
@@ -39,4 +40,6 @@ public class Waypoint : MonoBehaviour
         if(_targetInstance)
             _targetInstance.SetActive(value);
     }
+
+    public bool IsWalkable() => _isWalkable;
 }
