@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class DefKnight : MonoBehaviour, IDefender
@@ -13,7 +12,7 @@ public class DefKnight : MonoBehaviour, IDefender
 
     void OnTriggerEnter(Collider collider)
     {
-        print("enterring trigger: " + collider.name);;
+        // print("enterring trigger: " + collider.name);;
         if (collider.GetComponent<IEnemy>() != null)
         {
             Attack(collider.GetComponent<Health>());

@@ -3,11 +3,13 @@ using UnityEngine;
 public class EnemyZumby : MonoBehaviour, IEnemy
 {
     EnemyMove _mover;
+    Fighter _fighter;
+    Collider _defCollider;
 
     void Start()
     {
         _mover = GetComponent<EnemyMove>();
-
+        _fighter = GetComponent<Fighter>();
         _mover.IsStuckAction += OnStuck;
 
         Move();
@@ -20,11 +22,32 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 
     public void OnStuck()
     {
-        Attack();
+        if (_defCollider != null)
+        {
+            _defCollider.GetComponent<Health>().OnDie += ContinueMoving;
+            Attack(_defCollider.GetComponent<Health>());
+        }
     }
 
-    public void Attack()
+    public void Attack(Health health)
     {
-        print(gameObject.name + " attack");
+        StartCoroutine(_fighter.Attack(health));
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.GetComponent<IDefender>() != null)
+        {
+            _defCollider = collider;
+        }
+    }
+
+    void ContinueMoving()
+    {
+        Invoke("CanMove", 1f);
+    }
+
+    void CanMove(){
+        _mover.ResumeMove();
     }
 }
