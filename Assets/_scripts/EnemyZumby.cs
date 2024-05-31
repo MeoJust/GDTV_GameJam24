@@ -4,19 +4,30 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 {
     EnemyMove _mover;
     Fighter _fighter;
+    Health _health;
+
     Collider _defCollider;
 
     void Start()
     {
         _mover = GetComponent<EnemyMove>();
         _fighter = GetComponent<Fighter>();
+        _health = GetComponent<Health>();
+
         _mover.IsStuckAction += OnStuck;
+        _health.OnDie += OnDie;
 
         Move();
     }
 
     public void Move()
     {
+        // if (_health.GetHealth() <= 0)
+        // {
+        //     Destroy(gameObject);
+        //     return;
+        // }
+
         StartCoroutine(_mover.Move());
     }
 
@@ -24,7 +35,7 @@ public class EnemyZumby : MonoBehaviour, IEnemy
     {
         if (_defCollider != null)
         {
-            _defCollider.GetComponent<Health>().OnDie += ContinueMoving;
+            _defCollider.GetComponent<DefKnight>().IsDeadAction += ContinueMoving;
             Attack(_defCollider.GetComponent<Health>());
         }
     }
@@ -36,8 +47,10 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 
     void OnTriggerEnter(Collider collider)
     {
+        print("enterring trigger: " + collider.name);
         if (collider.GetComponent<IDefender>() != null)
         {
+            print("defender found: " + collider.name);
             _defCollider = collider;
         }
     }
@@ -47,7 +60,28 @@ public class EnemyZumby : MonoBehaviour, IEnemy
         Invoke("CanMove", 1f);
     }
 
-    void CanMove(){
-        _mover.ResumeMove();
+    void CanMove()
+    {
+        if (_mover != null)
+            _mover.ResumeMove();
+    }
+
+    void OnDie()
+    {
+        print("zumby died");
+        Waypoint currentWaypoint = _mover.GetCurrentWaypoint();
+        print("current waypoint: " + currentWaypoint);
+        if (currentWaypoint != null)
+        {
+            currentWaypoint.IsPlaceable = true;
+        }
+        CancelInvoke();
+        _health.OnDie -= OnDie;
+        if (_defCollider != null && _defCollider.GetComponent<DefKnight>() != null)
+        {
+            _defCollider.GetComponent<DefKnight>().IsDeadAction -= ContinueMoving;
+        }
+
+        Destroy(gameObject);
     }
 }
