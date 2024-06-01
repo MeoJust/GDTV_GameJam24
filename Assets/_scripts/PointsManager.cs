@@ -12,7 +12,7 @@ public class PointsManager : MonoBehaviour
     [SerializeField] Button _addPointsBTN;
 
     int _points;
-    int _zumbyCount = 66;
+    int _zumbyCount = 100;
 
     void Start()
     {

@@ -22,12 +22,6 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 
     public void Move()
     {
-        // if (_health.GetHealth() <= 0)
-        // {
-        //     Destroy(gameObject);
-        //     return;
-        // }
-
         StartCoroutine(_mover.Move());
     }
 
@@ -47,10 +41,10 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 
     void OnTriggerEnter(Collider collider)
     {
-        print("enterring trigger: " + collider.name);
+        // print("enterring trigger: " + collider.name);
         if (collider.GetComponent<IDefender>() != null)
         {
-            print("defender found: " + collider.name);
+            // print("defender found: " + collider.name);
             _defCollider = collider;
         }
     }
@@ -68,9 +62,10 @@ public class EnemyZumby : MonoBehaviour, IEnemy
 
     void OnDie()
     {
-        print("zumby died");
+        // print("zumby died");
+        FindObjectOfType<LevelManager>().CountDatKills();
         Waypoint currentWaypoint = _mover.GetCurrentWaypoint();
-        print("current waypoint: " + currentWaypoint);
+        // print("current waypoint: " + currentWaypoint);
         if (currentWaypoint != null)
         {
             currentWaypoint.IsPlaceable = true;

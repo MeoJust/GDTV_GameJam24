@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     public void GetDamage(float damage)
     {
         _startHealth -= damage;
-        print(gameObject.name + " health: " + _startHealth);
+        // print(gameObject.name + " health: " + _startHealth);
         if (_startHealth <= 0)
         {
             Die();
