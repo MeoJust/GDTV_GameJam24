@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8184490990008062401
 RectTransform:
   m_ObjectHideFlags: 0
@@ -326,6 +326,7 @@ MonoBehaviour:
   _isWalkable: 1
   _placeTarget: {fileID: 4660239037417525765, guid: 8ba23c9bc20f63b40b7d7711c48becfb, type: 3}
   _knight: {fileID: 5616536399850177357, guid: 6a94e30e369abec459252f55da664d24, type: 3}
+  _marksTXT: {fileID: 935992376893498570}
 --- !u!65 &5187428971336907971
 BoxCollider:
   m_ObjectHideFlags: 0

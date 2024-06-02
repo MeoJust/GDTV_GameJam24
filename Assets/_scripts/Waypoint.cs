@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class Waypoint : MonoBehaviour
@@ -9,6 +10,7 @@ public class Waypoint : MonoBehaviour
     [SerializeField] GameObject _knight;
 
     PointsManager _pointsManager;
+    [SerializeField] GameObject _marksTXT;
 
     public Action<Waypoint> OnWayCleared;
 
@@ -23,6 +25,8 @@ public class Waypoint : MonoBehaviour
             _targetInstance = Instantiate(_placeTarget, transform.position, Quaternion.identity);
             SetTheTarget(false);
         }
+
+        SetMarks();
     }
 
     void OnMouseOver()
@@ -81,5 +85,11 @@ public class Waypoint : MonoBehaviour
     {
         get => _isPlaceable;
         set => _isPlaceable = value;
+    }
+
+    void SetMarks()
+    {
+        _marksTXT.gameObject.SetActive(GameManager.Instance.IsShowMarks);
+        print(GameManager.Instance.IsShowMarks);
     }
 }

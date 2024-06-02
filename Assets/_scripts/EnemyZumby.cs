@@ -47,6 +47,10 @@ public class EnemyZumby : MonoBehaviour, IEnemy
             // print("defender found: " + collider.name);
             _defCollider = collider;
         }
+        else if (collider.GetComponent<LoseTrigger>())
+        {
+            FindObjectOfType<LevelManager>().Lose();
+        }
     }
 
     void ContinueMoving()
